@@ -1,9 +1,8 @@
 using CommunityToolkit.Mvvm.Input;
-using ExpenseTracker.Core.Interfaces;
 using System.Collections.ObjectModel;
-using ExpenseTracker.Core.Models;
-using ExpenseTracker.Core.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
+using ExpenseTracker.Infrastructure.Interfaces;
+using static Entities.Enums.Enums;
 
 namespace ExpenseTracker.App.ViewModels;
 

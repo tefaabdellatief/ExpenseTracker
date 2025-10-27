@@ -1,5 +1,7 @@
-using ExpenseTracker.Core.Interfaces;
-using ExpenseTracker.Core.Models;
+
+
+using Entities.Dtos;
+using ExpenseTracker.Infrastructure.Interfaces;
 
 namespace ExpenseTracker.Infrastructure.Services;
 
@@ -18,7 +20,7 @@ public class DataSyncService
     {
         try
         {
-            var local = await _local.GetAllAsync<Expense>();
+            var local = await _local.GetAllAsync<ExpenseDto>();
             var remote = await _remote.GetAllAsync();
 
             var missing = remote.Where(r => !local.Any(l => l.Id == r.Id)).ToList();

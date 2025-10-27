@@ -1,8 +1,8 @@
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ExpenseTracker.Core.Interfaces;
-using ExpenseTracker.Core.Models;
+using Entities.Dtos;
+using ExpenseTracker.Infrastructure.Interfaces;
 using System.Collections.ObjectModel;
 
 namespace ExpenseTracker.App.ViewModels;
@@ -11,7 +11,7 @@ public partial class ExpenseListViewModel : BaseViewModel
 {
     private readonly IExpenseService _service;
 
-    public ObservableCollection<Expense> Expenses { get; } = new();
+    public ObservableCollection<ExpenseDto> Expenses { get; } = new();
     [ObservableProperty] private string searchText = string.Empty;
 
     public ExpenseListViewModel(IExpenseService service) => _service = service;
@@ -35,7 +35,7 @@ public partial class ExpenseListViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task DeleteAsync(Expense e)
+    public async Task DeleteAsync(ExpenseDto e)
     {
         if (e == null) return;
         var ok = await Shell.Current.DisplayAlert("Delete", $"Delete '{e.Description}'?", "Yes", "No");

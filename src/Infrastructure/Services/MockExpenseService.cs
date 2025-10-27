@@ -1,21 +1,23 @@
-using ExpenseTracker.Core.Interfaces;
-using ExpenseTracker.Core.Models;
-using ExpenseTracker.Core.Enums;
+
+
+using Entities.Dtos;
+using ExpenseTracker.Infrastructure.Interfaces;
+using static Entities.Enums.Enums;
 
 namespace ExpenseTracker.Infrastructure.Services;
 
 public class MockExpenseService : IExpenseService
 {
-    private readonly List<Expense> _expenses = new();
+    private readonly List<ExpenseDto> _expenses = new();
     private int _nextId = 1;
 
     public MockExpenseService()
     {
         var rnd = new Random();
         var cats = Enum.GetValues<ExpenseCategory>();
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 6; i++)
         {
-            _expenses.Add(new Expense
+            _expenses.Add(new ExpenseDto
             {
                 Id = _nextId++,
                 Amount = Math.Round((decimal)(rnd.NextDouble()*200 + 5), 2),
@@ -29,7 +31,7 @@ public class MockExpenseService : IExpenseService
 
     private static Task Delay() => Task.Delay(Random.Shared.Next(300,500));
 
-    public async Task AddAsync(Expense expense)
+    public async Task AddAsync(ExpenseDto expense)
     {
         await Delay();
         expense.Id = _nextId++;
@@ -42,31 +44,37 @@ public class MockExpenseService : IExpenseService
         _expenses.RemoveAll(e => e.Id == id);
     }
 
-    public async Task<IEnumerable<Expense>> FilterByCategoryAsync(string category)
+    public async Task<IEnumerable<ExpenseDto>> FilterByCategoryAsync(string category)
     {
         await Delay();
         return _expenses.Where(e => e.Category.ToString() == category).OrderByDescending(e=>e.Date);
     }
 
-    public async Task<IEnumerable<Expense>> FilterByDateRangeAsync(DateTime from, DateTime to)
+    public async Task<IEnumerable<ExpenseDto>> FilterByDateRangeAsync(DateTime from, DateTime to)
     {
         await Delay();
         return _expenses.Where(e => e.Date >= from && e.Date <= to).OrderByDescending(e=>e.Date);
     }
 
-    public async Task<IEnumerable<Core.Models.Expense>> GetAllAsync()
+    public async Task<IEnumerable<ExpenseDto>> FilterByCategoryAndDateRangeAsync(string category, DateTime from, DateTime to)
+    {
+        await Delay();
+        return _expenses.Where(e => (e.Date >= from && e.Date <= to) && e.Category.Equals(category)).OrderByDescending(e => e.Date);
+    }
+
+    public async Task<IEnumerable<ExpenseDto>> GetAllAsync()
     {
         await Delay();
         return _expenses.OrderByDescending(e=>e.Date);
     }
 
-    public async Task<Core.Models.Expense?> GetByIdAsync(int id)
+    public async Task<ExpenseDto?> GetByIdAsync(int id)
     {
         await Delay();
         return _expenses.FirstOrDefault(e => e.Id == id);
     }
 
-    public async Task UpdateAsync(Core.Models.Expense expense)
+    public async Task UpdateAsync(ExpenseDto expense)
     {
         await Delay();
         var ex = _expenses.FirstOrDefault(e => e.Id == expense.Id);

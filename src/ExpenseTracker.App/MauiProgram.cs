@@ -1,12 +1,12 @@
-using Microsoft.Maui.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using ExpenseTracker.Core.Interfaces;
-using ExpenseTracker.Infrastructure.Services;
-using ExpenseTracker.Infrastructure.Data;
+using CommunityToolkit.Maui;
 using ExpenseTracker.App.ViewModels;
 using ExpenseTracker.App.Views;
+using ExpenseTracker.Infrastructure.Interfaces;
+using ExpenseTracker.Infrastructure.Services;
+using ExpenseTracker.Infrastructure.SqliteConfigs;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Maui.Hosting;
 using System.IO;
-using CommunityToolkit.Maui;
 
 namespace ExpenseTracker.App;
 
@@ -26,7 +26,7 @@ public static class MauiProgram
         // Register infrastructure
         builder.Services.AddSingleton<IExpenseService, MockExpenseService>();
         builder.Services.AddSingleton<IAuthenticationService, DemoAuthenticationService>();
-        builder.Services.AddSingleton<IDataService>(sp => new DatabaseService(dbPath));
+        builder.Services.AddSingleton<IDataService>(sp => new SqlServices(dbPath));
         builder.Services.AddSingleton<DataSyncService>();
 
         // ViewModels & Views
@@ -41,10 +41,10 @@ public static class MauiProgram
         var app = builder.Build();
 
         // Initialize DB and seed
-        var dataService = app.Services.GetRequiredService<IDataService>() as DatabaseService;
+        var dataService = app.Services.GetRequiredService<IDataService>() as SqlServices;
         Task.Run(async () => {
             await dataService.InitializeAsync();
-            await DatabaseInitializer.SeedAsync(dataService.Connection);
+            await Initializer.SeedAsync(dataService.Connection);
         }).Wait();
 
         return app;

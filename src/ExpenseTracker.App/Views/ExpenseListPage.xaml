@@ -3,7 +3,7 @@
     x:Class="ExpenseTracker.App.Views.ExpenseListPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:model="clr-namespace:ExpenseTracker.Core.Models;assembly=ExpenseTracker.Core"
+    xmlns:model="clr-namespace:Entities.Dtos;assembly=Entities"
     xmlns:vm="clr-namespace:ExpenseTracker.App.ViewModels"
     x:DataType="vm:ExpenseListViewModel">
     <ContentPage.ToolbarItems>
@@ -15,10 +15,10 @@
                 <Label
                     HorizontalOptions="Center"
                     Text="No expenses found"
-                    VerticalOptions="CenterAndExpand" />
+                    VerticalOptions="Center" />
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Expense">
+                <DataTemplate x:DataType="model:ExpenseDto">
                     <SwipeView>
                         <SwipeView.RightItems>
                             <SwipeItems>
@@ -29,12 +29,11 @@
                                     Text="Delete" />
                             </SwipeItems>
                         </SwipeView.RightItems>
-                        <Frame
+                        <Border
                             Margin="10"
-                            Padding="10"
-                            BackgroundColor="{StaticResource Surface}"
-                            CornerRadius="10">
-                            <Grid ColumnDefinitions="Auto,*,Auto">
+                            Padding="18,12"
+                            BackgroundColor="{StaticResource Surface}">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
                                 <Label
                                     Grid.Column="0"
                                     FontSize="20"
@@ -46,10 +45,10 @@
                                 <Label
                                     Grid.Column="2"
                                     FontAttributes="Bold"
-                                    Text="{Binding Amount, StringFormat='${0:F2}'}"
+                                    Text="{Binding Amount, StringFormat='{0:F2} Egp'}"
                                     TextColor="{StaticResource Primary}" />
                             </Grid>
-                        </Frame>
+                        </Border>
                     </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
