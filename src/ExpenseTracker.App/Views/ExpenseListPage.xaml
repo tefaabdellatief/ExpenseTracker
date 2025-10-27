@@ -6,54 +6,241 @@
     xmlns:model="clr-namespace:Entities.Dtos;assembly=Entities"
     xmlns:vm="clr-namespace:ExpenseTracker.App.ViewModels"
     x:DataType="vm:ExpenseListViewModel">
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding NavigateAddCommand}" Text="Add" />
     </ContentPage.ToolbarItems>
-    <Grid>
-        <CollectionView ItemsSource="{Binding Expenses}">
-            <CollectionView.EmptyView>
+    <Grid RowDefinitions="Auto,Auto,*">
+        <!--  Search and Filter Header  -->
+        <Border
+            Grid.Row="0"
+            Padding="15,10"
+            BackgroundColor="{StaticResource Surface}">
+            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                <!--  Search Bar  -->
+                <SearchBar
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    BackgroundColor="Transparent"
+                    Placeholder="Search expenses..."
+                    Text="{Binding SearchText}" />
+                <!--  Filter Toggle Button  -->
+                <Grid
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="10,0,0,0">
+                    <Button
+                        BackgroundColor="{StaticResource Primary}"
+                        Command="{Binding ToggleFilterCommand}"
+                        CornerRadius="22"
+                        FontSize="18"
+                        HeightRequest="45"
+                        Text="🔍"
+                        TextColor="White"
+                        WidthRequest="45" />
+                    <!--  Filter Count Badge  -->
+                    <Border
+                        Margin="0,-5,-5,0"
+                        BackgroundColor="{StaticResource Accent4}"
+                        HeightRequest="20"
+                        HorizontalOptions="End"
+                        IsVisible="{Binding HasActiveFilters}"
+                        StrokeShape="RoundRectangle 10"
+                        VerticalOptions="Start"
+                        WidthRequest="20">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="{Binding ActiveFilterCount}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+        <!--  Expandable Filter Panel  -->
+        <Border
+            Grid.Row="1"
+            Padding="15"
+            BackgroundColor="{StaticResource Surface}"
+            IsVisible="{Binding IsFilterExpanded}">
+            <Grid
+                ColumnDefinitions="*,*"
+                ColumnSpacing="10"
+                RowDefinitions="Auto,Auto,Auto,Auto"
+                RowSpacing="15">
+                <!--  Category Filter  -->
                 <Label
-                    HorizontalOptions="Center"
-                    Text="No expenses found"
-                    VerticalOptions="Center" />
-            </CollectionView.EmptyView>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:ExpenseDto">
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItems>
-                                <SwipeItem
-                                    BackgroundColor="{StaticResource Accent4}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ExpenseListViewModel}}, Path=DeleteCommand}"
-                                    CommandParameter="{Binding .}"
-                                    Text="Delete" />
-                            </SwipeItems>
-                        </SwipeView.RightItems>
-                        <Border
-                            Margin="10"
-                            Padding="18,12"
-                            BackgroundColor="{StaticResource Surface}">
-                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                                <Label
-                                    Grid.Column="0"
-                                    FontSize="20"
-                                    Text="💵" />
-                                <VerticalStackLayout Grid.Column="1">
-                                    <Label FontAttributes="Bold" Text="{Binding Description}" />
-                                    <Label FontSize="12" Text="{Binding Date, StringFormat='{0:MMM dd, yyyy}'}" />
-                                </VerticalStackLayout>
-                                <Label
-                                    Grid.Column="2"
-                                    FontAttributes="Bold"
-                                    Text="{Binding Amount, StringFormat='{0:F2} Egp'}"
-                                    TextColor="{StaticResource Primary}" />
-                            </Grid>
-                        </Border>
-                    </SwipeView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    FontAttributes="Bold"
+                    Text="Category" />
+                <Picker
+                    Title="Select Category"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    BackgroundColor="{StaticResource Surface}"
+                    ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding SelectedCategory}" />
+                <!--  Date Range  -->
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    FontAttributes="Bold"
+                    Text="From Date" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    Text="To Date" />
+                <DatePicker
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource Surface}"
+                    Date="{Binding FromDate}" />
+                <DatePicker
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    BackgroundColor="{StaticResource Surface}"
+                    Date="{Binding ToDate}" />
+                <!--  Filter Actions  -->
+                <Grid
+                    Grid.Row="4"
+                    Grid.ColumnSpan="2"
+                    Margin="0,15,0,0"
+                    ColumnDefinitions="*,*"
+                    ColumnSpacing="10">
+                    <Button
+                        Grid.Column="0"
+                        BackgroundColor="{StaticResource Secondary}"
+                        Command="{Binding ClearFiltersCommand}"
+                        Text="Clear Filters"
+                        TextColor="White" />
+                    <Button
+                        Grid.Column="1"
+                        BackgroundColor="{StaticResource Primary}"
+                        Command="{Binding ToggleFilterCommand}"
+                        Text="Apply Filters"
+                        TextColor="White" />
+                </Grid>
+            </Grid>
+        </Border>
+        <RefreshView
+            Grid.Row="2"
+            Command="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView BackgroundColor="{StaticResource Background}" ItemsSource="{Binding Expenses}">
+                <CollectionView.EmptyView>
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="No expenses found"
+                        VerticalOptions="Center" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:ExpenseDto">
+                        <SwipeView>
+                            <!--  Swipe Left Items (Edit)  -->
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        BackgroundColor="White"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ExpenseListViewModel}}, Path=EditCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Edit" />
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+                            <!--  Swipe Right Items (Delete)  -->
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        BackgroundColor="{StaticResource Accent4}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ExpenseListViewModel}}, Path=DeleteCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Delete" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Border
+                                Margin="15,8"
+                                Padding="20,15"
+                                BackgroundColor="{StaticResource Surface}"
+                                Stroke="{StaticResource Gray200}"
+                                StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ExpenseListViewModel}}, Path=ViewDetailsCommand}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                                    <!--  Category Icon  -->
+                                    <Border
+                                        Grid.Column="0"
+                                        BackgroundColor="{StaticResource Primary}"
+                                        HeightRequest="45"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="45">
+                                        <Label
+                                            FontSize="20"
+                                            HorizontalOptions="Center"
+                                            Text="💰"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </Border>
+                                    <!--  Expense Details  -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="16"
+                                            Text="{Binding Description}" />
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Border
+                                                Padding="12,4"
+                                                BackgroundColor="{StaticResource Secondary}"
+                                                StrokeShape="RoundRectangle 10">
+                                                <Label
+                                                    FontSize="11"
+                                                    Text="{Binding Category}"
+                                                    TextColor="Black" />
+                                            </Border>
+                                            <Label
+                                                FontSize="12"
+                                                Text="{Binding Date, StringFormat='{0:MMM dd, yyyy}'}"
+                                                TextColor="{StaticResource Gray600}"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                    <!--  Amount and Arrow  -->
+                                    <VerticalStackLayout Grid.Column="2" HorizontalOptions="End">
+                                        <HorizontalStackLayout HorizontalOptions="End" Spacing="8">
+                                            <VerticalStackLayout HorizontalOptions="End">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="18"
+                                                    HorizontalOptions="End"
+                                                    Text="{Binding Amount, StringFormat='{0:F2}'}"
+                                                    TextColor="{StaticResource Primary}" />
+                                                <Label
+                                                    FontSize="12"
+                                                    HorizontalOptions="End"
+                                                    Text="EGP"
+                                                    TextColor="{StaticResource Gray600}" />
+                                            </VerticalStackLayout>
+                                            <Label
+                                                FontSize="16"
+                                                Text="›"
+                                                TextColor="{StaticResource Gray400}"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
         <ActivityIndicator
+            Grid.Row="2"
             HeightRequest="55"
             HorizontalOptions="Center"
             IsRunning="{Binding IsBusy}"

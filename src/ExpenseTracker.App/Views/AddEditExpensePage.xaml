@@ -4,21 +4,172 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:ExpenseTracker.App.ViewModels"
+    Title="{Binding PageTitle}"
     x:DataType="vm:AddEditExpenseViewModel">
+
+    <ContentPage.ToolbarItems>
+        <!--  Edit/Cancel Button for View Mode  -->
+        <ToolbarItem
+            Command="{Binding ToggleEditCommand}"
+            IsEnabled="{Binding IsViewMode}"
+            Text="{Binding EditButtonText}" />
+        <!--  Delete Button for View Mode  -->
+        <ToolbarItem
+            Command="{Binding DeleteCommand}"
+            IsEnabled="{Binding IsViewMode}"
+            Text="Delete" />
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="12">
-            <Label Text="Amount" />
-            <Entry
-                x:Name="AmountEntry"
-                Style="{StaticResource ValidationEntry}"
-                Text="{Binding Amount, Mode=TwoWay}" />
-            <Label Text="Category" />
-            <Picker ItemsSource="{Binding Categories}" SelectedItem="{Binding Category}" />
-            <Label Text="Date" />
-            <DatePicker Date="{Binding Date}" />
-            <Label Text="Description" />
-            <Editor HeightRequest="120" Text="{Binding Description}" />
-            <Button Command="{Binding SaveCommand}" Text="Save" />
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <!--  Edit Mode Indicator  -->
+            <Border
+                Margin="0,0,0,10"
+                Padding="15,8"
+                BackgroundColor="{StaticResource Primary}"
+                IsVisible="{Binding IsEditing}"
+                StrokeShape="RoundRectangle 8">
+                <Label
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Text="✏️ Add/Editing Mode, Make your changes and save"
+                    TextColor="White" />
+            </Border>
+            <!--  Amount Section  -->
+            <Border
+                Padding="20"
+                BackgroundColor="{StaticResource Surface}"
+                StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="8">
+                    <Label
+                        FontAttributes="Bold"
+                        Text="Amount"
+                        TextColor="{StaticResource Primary}" />
+                    <!--  View Mode  -->
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        Text="{Binding Amount, StringFormat='{0:F2} EGP'}"
+                        TextColor="{StaticResource Primary}">
+                        <Label.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsEditing}"
+                                TargetType="Label"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <!--  Edit Mode  -->
+                    <Entry
+                        IsVisible="{Binding IsEditing}"
+                        Keyboard="Numeric"
+                        Placeholder="Enter amount"
+                        Text="{Binding Amount, Mode=TwoWay}" />
+                </VerticalStackLayout>
+            </Border>
+            <!--  Category Section  -->
+            <Border
+                Padding="20"
+                BackgroundColor="{StaticResource Surface}"
+                StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="8">
+                    <Label
+                        FontAttributes="Bold"
+                        Text="Category"
+                        TextColor="{StaticResource Primary}" />
+                    <!--  View Mode  -->
+                    <HorizontalStackLayout Spacing="10">
+                        <HorizontalStackLayout.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsEditing}"
+                                TargetType="HorizontalStackLayout"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </HorizontalStackLayout.Triggers>
+                        <Border
+                            Padding="12,6"
+                            BackgroundColor="{StaticResource Secondary}"
+                            StrokeShape="RoundRectangle 15">
+                            <Label Text="{Binding Category}" TextColor="Black" />
+                        </Border>
+                    </HorizontalStackLayout>
+                    <!--  Edit Mode  -->
+                    <Picker
+                        IsVisible="{Binding IsEditing}"
+                        ItemsSource="{Binding Categories}"
+                        SelectedItem="{Binding Category}" />
+                </VerticalStackLayout>
+            </Border>
+            <!--  Date Section  -->
+            <Border
+                Padding="20"
+                BackgroundColor="{StaticResource Surface}"
+                StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="8">
+                    <Label
+                        FontAttributes="Bold"
+                        Text="Date"
+                        TextColor="{StaticResource Primary}" />
+                    <!--  View Mode  -->
+                    <Label FontSize="16" Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}">
+                        <Label.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsEditing}"
+                                TargetType="Label"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <!--  Edit Mode  -->
+                    <DatePicker Date="{Binding Date}" IsVisible="{Binding IsEditing}" />
+                </VerticalStackLayout>
+            </Border>
+            <!--  Description Section  -->
+            <Border
+                Padding="20"
+                BackgroundColor="{StaticResource Surface}"
+                StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="8">
+                    <Label
+                        FontAttributes="Bold"
+                        Text="Description"
+                        TextColor="{StaticResource Primary}" />
+                    <!--  View Mode  -->
+                    <Label
+                        FontSize="16"
+                        LineBreakMode="WordWrap"
+                        Text="{Binding Description}">
+                        <Label.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsEditing}"
+                                TargetType="Label"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <!--  Edit Mode  -->
+                    <Editor
+                        HeightRequest="120"
+                        IsVisible="{Binding IsEditing}"
+                        Placeholder="Enter description"
+                        Text="{Binding Description}" />
+                </VerticalStackLayout>
+            </Border>
+            <!--  Save Button (only visible when editing)  -->
+            <Button
+                Margin="0,10,0,0"
+                BackgroundColor="{StaticResource Primary}"
+                Command="{Binding SaveCommand}"
+                CornerRadius="25"
+                FontAttributes="Bold"
+                HeightRequest="50"
+                IsVisible="{Binding IsEditing}"
+                Text="Save Changes"
+                TextColor="White" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
