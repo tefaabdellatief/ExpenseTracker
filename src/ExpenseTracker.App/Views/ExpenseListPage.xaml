@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ExpenseTracker.App.Views.ExpenseListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:ExpenseTracker.Core.Models;assembly=ExpenseTracker.Core"
+    xmlns:vm="clr-namespace:ExpenseTracker.App.ViewModels"
+    x:DataType="vm:ExpenseListViewModel">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding NavigateAddCommand}" Text="Add" />
+    </ContentPage.ToolbarItems>
+    <Grid>
+        <CollectionView ItemsSource="{Binding Expenses}">
+            <CollectionView.EmptyView>
+                <Label
+                    HorizontalOptions="Center"
+                    Text="No expenses found"
+                    VerticalOptions="CenterAndExpand" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Expense">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem
+                                    BackgroundColor="{StaticResource Accent4}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ExpenseListViewModel}}, Path=DeleteCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Text="Delete" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Frame
+                            Margin="10"
+                            Padding="10"
+                            BackgroundColor="{StaticResource Surface}"
+                            CornerRadius="10">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label
+                                    Grid.Column="0"
+                                    FontSize="20"
+                                    Text="💵" />
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label FontAttributes="Bold" Text="{Binding Description}" />
+                                    <Label FontSize="12" Text="{Binding Date, StringFormat='{0:MMM dd, yyyy}'}" />
+                                </VerticalStackLayout>
+                                <Label
+                                    Grid.Column="2"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Amount, StringFormat='${0:F2}'}"
+                                    TextColor="{StaticResource Primary}" />
+                            </Grid>
+                        </Frame>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ActivityIndicator
+            HeightRequest="55"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="55" />
+    </Grid>
+</ContentPage>

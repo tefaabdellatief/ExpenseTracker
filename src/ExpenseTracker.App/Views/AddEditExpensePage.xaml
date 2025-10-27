@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ExpenseTracker.App.Views.AddEditExpensePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:ExpenseTracker.App.ViewModels"
+    x:DataType="vm:AddEditExpenseViewModel">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Label Text="Amount" />
+            <Entry
+                x:Name="AmountEntry"
+                Style="{StaticResource ValidationEntry}"
+                Text="{Binding Amount, Mode=TwoWay}" />
+            <Label Text="Category" />
+            <Picker ItemsSource="{Binding Categories}" SelectedItem="{Binding Category}" />
+            <Label Text="Date" />
+            <DatePicker Date="{Binding Date}" />
+            <Label Text="Description" />
+            <Editor HeightRequest="120" Text="{Binding Description}" />
+            <Button Command="{Binding SaveCommand}" Text="Save" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

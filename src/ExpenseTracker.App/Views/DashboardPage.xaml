@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ExpenseTracker.App.Views.DashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <VerticalStackLayout Padding="20" Spacing="12">
+        <Label
+            FontAttributes="Bold"
+            FontSize="20"
+            Text="Dashboard" />
+        <Label
+            x:Name="TotalLabel"
+            FontAttributes="Bold"
+            Text="Total: $0.00" />
+        <Label Text="Category breakdown" />
+        <!--  Chart placeholder  -->
+        <Frame
+            Padding="10"
+            BackgroundColor="{StaticResource Surface}"
+            CornerRadius="10">
+            <Label
+                HorizontalOptions="Center"
+                Text="Chart (placeholder)"
+                TextColor="PaleVioletRed"
+                VerticalOptions="CenterAndExpand" />
+        </Frame>
+    </VerticalStackLayout>
+</ContentPage>
