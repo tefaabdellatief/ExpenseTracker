@@ -165,7 +165,10 @@ public partial class ExpenseListViewModel : BaseViewModel
     [RelayCommand]
     public async Task NavigateAddAsync()
     {
-        await Shell.Current.GoToAsync(nameof(Views.AddEditExpensePage));
+        if (Shell.Current != null)
+        {
+            await Shell.Current.GoToAsync(nameof(Views.AddEditExpensePage));
+        }
     }
 
     [RelayCommand]
@@ -179,21 +182,21 @@ public partial class ExpenseListViewModel : BaseViewModel
     [RelayCommand]
     public async Task EditAsync(ExpenseDto expense)
     {
-        if (expense == null) return;
+        if (expense == null || Shell.Current == null) return;
         await Shell.Current.GoToAsync($"{nameof(Views.AddEditExpensePage)}?ExpenseId={expense.Id}");
     }
 
     [RelayCommand]
     public async Task ViewDetailsAsync(ExpenseDto expense)
     {
-        if (expense == null) return;
+        if (expense == null || Shell.Current == null) return;
         await Shell.Current.GoToAsync($"{nameof(Views.AddEditExpensePage)}?ExpenseId={expense.Id}");
     }
 
     [RelayCommand]
     public async Task DeleteAsync(ExpenseDto e)
     {
-        if (e == null) return;
+        if (e == null || Shell.Current == null) return;
         var ok = await Shell.Current.DisplayAlert("Delete", $"Delete '{e.Description}'?", "Yes", "No");
         if (!ok) return;
         await RunSafeAsync(async () =>

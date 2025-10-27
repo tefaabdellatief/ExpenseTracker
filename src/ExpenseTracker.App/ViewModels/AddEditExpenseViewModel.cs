@@ -84,6 +84,8 @@ public partial class AddEditExpenseViewModel : BaseViewModel, IQueryAttributable
     {
         if (!IsEditMode) return;
         
+        if (Shell.Current == null) return;
+        
         var confirm = await Shell.Current.DisplayAlert("Delete", "Are you sure you want to delete this expense?", "Yes", "No");
         if (!confirm) return;
 
@@ -91,7 +93,10 @@ public partial class AddEditExpenseViewModel : BaseViewModel, IQueryAttributable
         {
             await _service.DeleteAsync(_expenseId);
             await Toast.Make("Expense deleted").Show();
-            await Shell.Current.GoToAsync("..");
+            if (Shell.Current != null)
+            {
+                await Shell.Current.GoToAsync("..");
+            }
         });
     }
 
@@ -101,15 +106,22 @@ public partial class AddEditExpenseViewModel : BaseViewModel, IQueryAttributable
         // validations
         if (Amount <= 0)
         {
-            await Shell.Current.DisplayAlert("Validation", "Amount must be greater than zero.", "OK");
+            if (Shell.Current != null)
+            {
+                await Shell.Current.DisplayAlert("Validation", "Amount must be greater than zero.", "OK");
+            }
             return;
         }
         if (string.IsNullOrWhiteSpace(Description))
         {
-            await Shell.Current.DisplayAlert("Validation", "Description is required.", "OK");
+            if (Shell.Current != null)
+            {
+                await Shell.Current.DisplayAlert("Validation", "Description is required.", "OK");
+            }
             return;
         }
 
+        if (Shell.Current == null) return;
         var confirm = await Shell.Current.DisplayAlert("Confirm", "Save this expense?", "Yes", "No");
         if (!confirm) return;
 
@@ -144,7 +156,10 @@ public partial class AddEditExpenseViewModel : BaseViewModel, IQueryAttributable
                 };
                 await _service.AddAsync(e);
                 await Toast.Make("Expense saved").Show();
-                await Shell.Current.GoToAsync("..");
+                if (Shell.Current != null)
+                {
+                    await Shell.Current.GoToAsync("..");
+                }
             }
         });
     }

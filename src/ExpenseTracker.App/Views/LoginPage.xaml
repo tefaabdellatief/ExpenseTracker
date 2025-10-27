@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ExpenseTracker.App.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:ExpenseTracker.App.ViewModels"
+    Title="Welcome"
+    x:DataType="vm:LoginViewModel"
+    Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <Grid Padding="30" RowDefinitions="*,Auto,*">
+            <!--  Header Section  -->
+            <VerticalStackLayout
+                Grid.Row="0"
+                Spacing="20"
+                VerticalOptions="End">
+                <!--  App Logo/Icon  -->
+                <Border
+                    BackgroundColor="{StaticResource Primary}"
+                    HeightRequest="160"
+                    HorizontalOptions="Center"
+                    StrokeShape="RoundRectangle 80"
+                    WidthRequest="160">
+                    <Image
+                        Aspect="AspectFit"
+                        HeightRequest="150"
+                        Source="splash.png"
+                        WidthRequest="150" />
+                </Border>
+                <!--  Welcome Text  -->
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="32"
+                        HorizontalOptions="Center"
+                        Text="Expense Tracker"
+                        TextColor="{StaticResource Primary}" />
+                    <Label
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="Track your daily expenses with ease"
+                        TextColor="{StaticResource Gray600}" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+            <!--  Login Form  -->
+            <VerticalStackLayout
+                Grid.Row="1"
+                Margin="0,40"
+                Spacing="28">
+                <!--  Email Input  -->
+                <Border
+                    Padding="15"
+                    BackgroundColor="{StaticResource Background}"
+                    Stroke="{StaticResource Gray200}"
+                    StrokeShape="RoundRectangle 12"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Label
+                            Grid.Column="0"
+                            FontSize="20"
+                            Text="📧"
+                            VerticalOptions="Center" />
+                        <Entry
+                            Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            Keyboard="Email"
+                            Placeholder="Enter your email"
+                            Text="{Binding Email}" />
+                    </Grid>
+                </Border>
+                <!--  Password Input  -->
+                <Border
+                    Padding="15"
+                    BackgroundColor="{StaticResource Background}"
+                    Stroke="{StaticResource Gray200}"
+                    StrokeShape="RoundRectangle 12"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                        <Label
+                            Grid.Column="0"
+                            FontSize="20"
+                            Text="🔒"
+                            VerticalOptions="Center" />
+                        <Entry
+                            Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            Placeholder="Enter your password"
+                            Text="{Binding Password}">
+                            <Entry.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsPasswordVisible}"
+                                    TargetType="Entry"
+                                    Value="False">
+                                    <Setter Property="IsPassword" Value="True" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding IsPasswordVisible}"
+                                    TargetType="Entry"
+                                    Value="True">
+                                    <Setter Property="IsPassword" Value="False" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <Button
+                            Grid.Column="2"
+                            Padding="5"
+                            BackgroundColor="Transparent"
+                            Command="{Binding TogglePasswordVisibilityCommand}"
+                            FontSize="18"
+                            TextColor="{StaticResource Gray600}">
+                            <Button.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsPasswordVisible}"
+                                    TargetType="Button"
+                                    Value="False">
+                                    <Setter Property="Text" Value="👁️" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding IsPasswordVisible}"
+                                    TargetType="Button"
+                                    Value="True">
+                                    <Setter Property="Text" Value="🙈" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </Grid>
+                </Border>
+                <!--  Login Button  -->
+                <Button
+                    BackgroundColor="{StaticResource Accent2}"
+                    Command="{Binding LoginCommand}"
+                    CornerRadius="12"
+                    FontAttributes="Bold"
+                    HeightRequest="55"
+                    Text="Sign In"
+                    TextColor="White">
+                    <Button.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsBusy}"
+                            TargetType="Button"
+                            Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <!--  Loading Indicator  -->
+                <ActivityIndicator
+                    HeightRequest="30"
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    Color="{StaticResource Primary}" />
+                <!--  Guest Access  -->
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="{StaticResource Accent1}"
+                    BorderWidth="0.5"
+                    Command="{Binding ContinueAsGuestCommand}"
+                    CornerRadius="12"
+                    HeightRequest="45"
+                    Text="Continue as Guest"
+                    TextColor="{StaticResource Accent1}" />
+            </VerticalStackLayout>
+            <!--  cer  -->
+            <VerticalStackLayout
+                Grid.Row="2"
+                Spacing="10"
+                VerticalOptions="End">
+                <Label
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Text="Demo Credentials:"
+                    TextColor="{StaticResource Gray600}" />
+                <Label
+                    FontSize="12"
+                    HorizontalOptions="Center"
+                    Text="Email: demo@demo.com"
+                    TextColor="{StaticResource Gray600}" />
+                <Label
+                    FontSize="12"
+                    HorizontalOptions="Center"
+                    Text="Password: 123456"
+                    TextColor="{StaticResource Gray600}" />
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>

@@ -29,18 +29,27 @@ public static class MauiProgram
         builder.Services.AddSingleton<IDataService>(sp => new SqlServices(dbPath));
         builder.Services.AddSingleton<DataSyncService>();
 
+        // Register app services
+        builder.Services.AddSingleton<ExpenseTracker.App.Services.IPreferencesService, ExpenseTracker.App.Services.PreferencesService>();
+        builder.Services.AddSingleton<ExpenseTracker.App.Services.IDialogService, ExpenseTracker.App.Services.DialogService>();
+
         // ViewModels & Views
         builder.Services.AddTransient<ExpenseListViewModel>();
         builder.Services.AddTransient<AddEditExpenseViewModel>();
         builder.Services.AddTransient<DashboardViewModel>();
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<SettingsViewModel>(); 
         builder.Services.AddSingleton<Views.ExpenseListPage>();
         builder.Services.AddTransient<Views.AddEditExpensePage>();
         builder.Services.AddSingleton<Views.DashboardPage>();
         builder.Services.AddSingleton<Views.SettingsPage>();
+        builder.Services.AddTransient<Views.LoginPage>();
+
+        builder.Services.AddSingleton<App>();
 
         var app = builder.Build();
 
-        // Initialize DB and seed
+        // Initialize DB and seed data
         var dataService = app.Services.GetRequiredService<IDataService>() as SqlServices;
         Task.Run(async () => {
             await dataService.InitializeAsync();

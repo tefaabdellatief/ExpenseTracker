@@ -4,7 +4,15 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:ExpenseTracker.App.Views">
-    <TabBar>
+
+    <!--  Login Page (No TabBar)  -->
+    <ShellContent
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="login"
+        Shell.FlyoutBehavior="Disabled" />
+
+    <!--  Main App (With TabBar)  -->
+    <TabBar Route="main">
         <ShellContent Title="Expenses" ContentTemplate="{DataTemplate views:ExpenseListPage}" />
         <ShellContent Title="Dashboard" ContentTemplate="{DataTemplate views:DashboardPage}" />
         <ShellContent Title="Settings" ContentTemplate="{DataTemplate views:SettingsPage}" />

@@ -17,7 +17,10 @@ public partial class BaseViewModel : ObservableObject
         catch (Exception ex)
         {
             ErrorMessage = ex.Message;
-            await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+            if (Shell.Current != null)
+            {
+                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+            }
         }
         finally
         {

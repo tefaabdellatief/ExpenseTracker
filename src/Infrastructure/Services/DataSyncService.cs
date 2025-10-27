@@ -31,7 +31,7 @@ public class DataSyncService
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Sync error: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"{ex.Message}");
         }
     }
 }

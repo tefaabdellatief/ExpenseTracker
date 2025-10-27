@@ -2,19 +2,128 @@
 <ContentPage
     x:Class="ExpenseTracker.App.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <VerticalStackLayout Padding="20" Spacing="12">
-        <Label
-            FontAttributes="Bold"
-            FontSize="20"
-            Text="Settings" />
-        <Label Text="Theme" />
-        <Picker>
-            <Picker.Items>
-                <x:String>System</x:String>
-                <x:String>Light</x:String>
-                <x:String>Dark</x:String>
-            </Picker.Items>
-        </Picker>
-    </VerticalStackLayout>
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:ExpenseTracker.App.ViewModels"
+    Title="Settings"
+    x:DataType="vm:SettingsViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <!--  User Info Section  -->
+            <Border
+                Padding="20"
+                BackgroundColor="{StaticResource Surface}"
+                StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="12">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Account"
+                        TextColor="{StaticResource Primary}" />
+                    <HorizontalStackLayout Spacing="10">
+                        <VerticalStackLayout Spacing="2">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                Text="{Binding UserEmail}" />
+                            <Label FontSize="12" TextColor="{StaticResource Gray600}">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding IsLoggedIn}"
+                                        TargetType="Label"
+                                        Value="True">
+                                        <Setter Property="Text" Value="Logged In" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding IsLoggedIn}"
+                                        TargetType="Label"
+                                        Value="False">
+                                        <Setter Property="Text" Value="Guest User" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+            <!--  App Settings Section  -->
+            <Border
+                Padding="20"
+                BackgroundColor="{StaticResource Surface}"
+                StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="15">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Preferences"
+                        TextColor="{StaticResource Primary}" />
+                    <!--  Theme Setting  -->
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label FontAttributes="Bold" Text="Theme" />
+                            <Label
+                                FontSize="12"
+                                Text="Choose your preferred theme"
+                                TextColor="{StaticResource Gray600}" />
+                        </VerticalStackLayout>
+                        <Picker
+                            Grid.Column="2"
+                            HorizontalTextAlignment="Center"
+                            SelectedItem="{Binding SelectedTheme}"
+                            WidthRequest="160">
+                            <Picker.Items>
+                                <x:String>System</x:String>
+                                <x:String>Light</x:String>
+                                <x:String>Dark</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+            <!--  Actions Section  -->
+            <Border
+                Padding="20"
+                BackgroundColor="{StaticResource Surface}"
+                StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="15">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Actions"
+                        TextColor="{StaticResource Primary}" />
+                    <!--  About Button  -->
+                    <Button
+                        BackgroundColor="Transparent"
+                        BorderColor="{StaticResource Primary}"
+                        BorderWidth="1"
+                        Command="{Binding ShowAboutCommand}"
+                        CornerRadius="8"
+                        HorizontalOptions="Fill"
+                        Text="📋 About"
+                        TextColor="{StaticResource Primary}" />
+                    <!--  Logout Button  -->
+                    <Button
+                        BackgroundColor="{StaticResource Accent4}"
+                        Command="{Binding LogoutCommand}"
+                        CornerRadius="8"
+                        HorizontalOptions="Fill"
+                        Text="🚪 Logout"
+                        TextColor="White" />
+                </VerticalStackLayout>
+            </Border>
+            <!--  App Info  -->
+            <VerticalStackLayout Margin="0,20,0,0" Spacing="5">
+                <Label
+                    FontSize="12"
+                    HorizontalOptions="Center"
+                    Text="ExpenseTracker v1.0.0"
+                    TextColor="{StaticResource Gray600}" />
+                <Label
+                    FontSize="10"
+                    HorizontalOptions="Center"
+                    Text="Built with ❤️"
+                    TextColor="{StaticResource Gray600}" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

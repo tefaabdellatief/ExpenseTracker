@@ -2,27 +2,191 @@
 <ContentPage
     x:Class="ExpenseTracker.App.Views.DashboardPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <VerticalStackLayout Padding="20" Spacing="12">
-        <Label
-            FontAttributes="Bold"
-            FontSize="20"
-            Text="Dashboard" />
-        <Label
-            x:Name="TotalLabel"
-            FontAttributes="Bold"
-            Text="Total: $0.00" />
-        <Label Text="Category breakdown" />
-        <!--  Chart placeholder  -->
-        <Frame
-            Padding="10"
-            BackgroundColor="{StaticResource Surface}"
-            CornerRadius="10">
-            <Label
-                HorizontalOptions="Center"
-                Text="Chart (placeholder)"
-                TextColor="PaleVioletRed"
-                VerticalOptions="CenterAndExpand" />
-        </Frame>
-    </VerticalStackLayout>
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:ExpenseTracker.App.Models"
+    xmlns:vm="clr-namespace:ExpenseTracker.App.ViewModels"
+    Title="Dashboard"
+    x:DataType="vm:DashboardViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <!--  Summary Cards  -->
+            <Grid
+                ColumnDefinitions="*,*"
+                ColumnSpacing="15"
+                RowDefinitions="Auto,Auto"
+                RowSpacing="15">
+                <!--  Total Expenses Card  -->
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Padding="20"
+                    BackgroundColor="{StaticResource Primary}"
+                    StrokeShape="RoundRectangle 15">
+                    <VerticalStackLayout Spacing="8">
+                        <Label
+                            FontSize="24"
+                            HorizontalOptions="Center"
+                            Text="💰" />
+                        <Label
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="Total Expenses"
+                            TextColor="White" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalOptions="Center"
+                            Text="{Binding TotalExpenses, StringFormat='{0:F2} EGP'}"
+                            TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
+                <!--  Total Transactions Card  -->
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Padding="20"
+                    BackgroundColor="{StaticResource Secondary}"
+                    StrokeShape="RoundRectangle 15">
+                    <VerticalStackLayout Spacing="8">
+                        <Label
+                            FontSize="24"
+                            HorizontalOptions="Center"
+                            Text="📊" />
+                        <Label
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="Transactions"
+                            TextColor="White" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalOptions="Center"
+                            Text="{Binding TotalTransactions}"
+                            TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
+                <!--  Average Expense Card  -->
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Padding="20"
+                    BackgroundColor="{StaticResource Surface}"
+                    StrokeShape="RoundRectangle 15">
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="15">
+                        <Label
+                            FontSize="24"
+                            Text="📈"
+                            VerticalOptions="Center" />
+                        <VerticalStackLayout Spacing="4">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="14"
+                                Text="Average per Transaction" />
+                            <Label
+                                FontSize="16"
+                                Text="{Binding AverageExpense, StringFormat='{0:F2} EGP'}"
+                                TextColor="{StaticResource Primary}" />
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+            <!--  Category Breakdown Section  -->
+            <VerticalStackLayout Spacing="15">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="Expenses by Category"
+                    TextColor="{StaticResource Primary}" />
+                <!--  Visual Chart Area  -->
+                <Border
+                    Padding="20"
+                    BackgroundColor="{StaticResource Surface}"
+                    StrokeShape="RoundRectangle 15">
+                    <VerticalStackLayout Spacing="15">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Text="Category Distribution" />
+                        <!--  Debug: Show count  -->
+                        <Label
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding CategoryData.Count, StringFormat='Categories: {0}'}"
+                            TextColor="Red" />
+                        <!--  percentages  -->
+                        <CollectionView
+                            x:Name="CategoryChart"
+                            BackgroundColor="White"
+                            HeightRequest="360"
+                            HorizontalOptions="Center"
+                            ItemsSource="{Binding CategoryData}">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Horizontal" Span="2" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:CategoryExpenseData">
+                                    <Border
+                                        Margin="5"
+                                        Padding="10,6"
+                                        BackgroundColor="{StaticResource Divider}"
+                                        HorizontalOptions="Fill"
+                                        WidthRequest="220">
+                                        <VerticalStackLayout Spacing="5">
+                                            <Label
+                                                FontSize="24"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding CategoryIcon}" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Category}" />
+                                            <Label HorizontalOptions="Center" Text="{Binding Amount, StringFormat='{0:F2} EGP'}" />
+                                            <Label
+                                                FontSize="20"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Percentage, StringFormat='{0:F1}%'}" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Border>
+                <!--  Empty State  -->
+                <Border
+                    x:Name="EmptyStateContainer"
+                    Padding="40"
+                    BackgroundColor="{StaticResource Surface}"
+                    StrokeShape="RoundRectangle 15">
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
+                        <Label
+                            FontSize="48"
+                            HorizontalOptions="Center"
+                            Text="📊" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalOptions="Center"
+                            Text="No expenses yet" />
+                        <Label
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="Start adding expenses to see your spending breakdown"
+                            TextColor="{StaticResource Gray600}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+            <!--  Loading Indicator  -->
+            <ActivityIndicator
+                HeightRequest="40"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                Color="{StaticResource Primary}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
