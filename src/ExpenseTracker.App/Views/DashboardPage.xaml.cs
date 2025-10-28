@@ -32,10 +32,10 @@ public partial class DashboardPage : ContentPage
         await ViewModel.LoadAsync();
     }
 
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
-        await ViewModel.LoadAsync();
+        //await ViewModel.LoadAsync();
         UpdateEmptyStateVisibility();
     }
 }

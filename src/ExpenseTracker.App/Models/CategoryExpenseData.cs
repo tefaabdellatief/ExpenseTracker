@@ -9,6 +9,7 @@ public class CategoryExpenseData
     public double Percentage { get; set; }
     public double Progress => Percentage / 100.0; // For ProgressBar (0-1 range)
     public string DisplayText => $"{Category}: {Amount:F2} EGP ({Percentage:F1}%)";
+    public string CategoryText => $"{Category}";
     public string CategoryIcon => GetCategoryIcon(Category);
     public Color CategoryColor => GetCategoryColor(Category);
 

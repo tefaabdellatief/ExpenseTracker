@@ -209,7 +209,7 @@
                         EnableTooltip="True"
                         ItemsSource="{Binding CategoryData}"
                         ShowDataLabels="True"
-                        XBindingPath="DisplayText"
+                        XBindingPath="CategoryText"
                         YBindingPath="Amount" />
                 </chart:SfCartesianChart>
             </VerticalStackLayout>

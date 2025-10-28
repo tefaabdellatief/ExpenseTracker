@@ -15,16 +15,31 @@ public class MockExpenseService : IExpenseService
     {
         var rnd = new Random();
         var cats = Enum.GetValues<ExpenseCategory>();
-        for (int i = 0; i < 6; i++)
+        int totalCount = cats.Count() * 3;
+        foreach (var cat in cats)
         {
             _expenses.Add(new ExpenseDto
             {
                 Id = _nextId++,
-                Amount = Math.Round((decimal)(rnd.NextDouble()*200 + 5), 2),
-                Category = cats[rnd.Next(cats.Length)],
-                Date = DateTime.UtcNow.AddDays(-rnd.Next(0,30)),
-                Description = $"Sample expense {i+1}",
-                CreatedAt = DateTime.UtcNow.AddDays(-rnd.Next(0,30))
+                Amount = Math.Round((decimal)(rnd.NextDouble() * 200 + 5), 2),
+                Category = cat,
+                Date = DateTime.UtcNow.AddDays(-rnd.Next(0, 30)),
+                Description = $"Sample {cat} expense",
+                CreatedAt = DateTime.UtcNow.AddDays(-rnd.Next(0, 30))
+            });
+        }
+
+        while (_expenses.Count < totalCount)
+        {
+            var cat = cats[rnd.Next(cats.Count())];
+            _expenses.Add(new ExpenseDto
+            {
+                Id = _nextId++,
+                Amount = Math.Round((decimal)(rnd.NextDouble() * 200 + 5), 2),
+                Category = cat,
+                Date = DateTime.UtcNow.AddDays(-rnd.Next(0, 30)),
+                Description = $"Sample {cat} expense {_expenses.Count + 1}",
+                CreatedAt = DateTime.UtcNow.AddDays(-rnd.Next(0, 30))
             });
         }
     }
