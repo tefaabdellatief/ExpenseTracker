@@ -219,7 +219,14 @@
                 IsRunning="{Binding IsBusy}"
                 IsVisible="{Binding IsBusy}"
                 Color="{StaticResource Primary}" />
-
+            <!--  export button  -->
+            <Button
+                BackgroundColor="{StaticResource Accent2}"
+                Command="{Binding ExportExpensesCommand}"
+                CornerRadius="12"
+                FontAttributes="Bold"
+                HeightRequest="55"
+                Text="Export your expenses" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

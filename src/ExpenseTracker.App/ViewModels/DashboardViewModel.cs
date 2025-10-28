@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using ExpenseTracker.Infrastructure.Interfaces;
 using ExpenseTracker.App.Models;
+using ExpenseTracker.App.Helpers;
 
 namespace ExpenseTracker.App.ViewModels;
 public partial class DashboardViewModel : BaseViewModel
@@ -71,5 +72,25 @@ public partial class DashboardViewModel : BaseViewModel
                 });
             }
         });
+    }
+
+    [RelayCommand]
+    public async Task ExportExpenses()
+    {
+        try
+        {
+            var expenses = await _service.GetAllAsync();
+            var filePath = await ExpenseExportHelper.ExportExpensesToCsvAsync(expenses, true);
+
+            await Share.Default.RequestAsync(new ShareFileRequest
+            {
+                Title = "Exported Expenses",
+                File = new ShareFile(filePath)
+            });
+        }
+        catch(Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error", ex?.Message ?? "exported file issue", "OK");
+        }
     }
 }
