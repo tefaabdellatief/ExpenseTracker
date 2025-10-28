@@ -19,7 +19,7 @@ public partial class SettingsViewModel : BaseViewModel
     private bool isLoggedIn = false;
 
     [ObservableProperty]
-    private string selectedTheme = "Light";
+    private string selectedTheme = "System";
 
     public ObservableCollection<string> AvailableThemes { get; } = new()
     {

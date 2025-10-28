@@ -29,9 +29,9 @@ public class DataSyncService
                 await _local.InsertAsync(r);
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            System.Diagnostics.Debug.WriteLine($"{ex.Message}");
+            return;
         }
     }
 }

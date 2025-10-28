@@ -11,32 +11,29 @@
 		<!-- Display Version Info -->
 		<ApplicationTitle>ExpTrack</ApplicationTitle>
 		<ApplicationId>com.adree.expensetracker</ApplicationId>
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion> 
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+		<ApplicationVersion>2</ApplicationVersion>
 
 		<!-- Platform Minimum Versions -->
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-	  <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+		<!-- Release mode optimizations and linker settings -->
+		<!--<AndroidLinkMode Condition="'$(Configuration)' == 'Release'">SdkOnly</AndroidLinkMode>
+		<AndroidLinkSkip Condition="'$(Configuration)' == 'Release'">ExpenseTracker.App;Entities</AndroidLinkSkip>
+		<TrimMode Condition="'$(Configuration)' == 'Release'">partial</TrimMode>-->
+
 	</PropertyGroup>
 
+	<!-- Android linker configuration -->
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+		<AndroidLinkDescription Include="Platforms\Android\linker.xml" />
+	</ItemGroup>
+	
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="12.1.0" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.90" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="12.2.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="Syncfusion.Maui.Charts" Version="30.1.42" />
 	</ItemGroup>

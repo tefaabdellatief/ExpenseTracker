@@ -7,21 +7,22 @@ namespace ExpenseTracker.App;
 public partial class App : Application
 {
     private readonly IPreferencesService _preferencesService;
-    private readonly IThemeService _themeService;
+    
 
-    public App(IPreferencesService preferencesService, IThemeService themeService)
+    public App(IPreferencesService preferencesService)
     {
         InitializeComponent();
         _preferencesService = preferencesService;
-        _themeService = themeService;
+        
 
         //30.x.x
         Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JEaF5cXmRCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXhceXVVRGlZWEVzXkdWYEk=");
 
-        MainPage = new AppShell();
+    }
 
-        _themeService.ApplyTheme();
-
+    protected override Window CreateWindow(IActivationState? activationState)
+    {
+        return new Window(new AppShell());
     }
 
     protected override void OnStart()

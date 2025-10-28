@@ -5,7 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:ExpenseTracker.App.ViewModels"
     Title="{Binding PageTitle}"
-    x:DataType="vm:AddEditExpenseViewModel">
+    x:DataType="vm:AddEditExpenseViewModel"
+    Shell.NavBarIsVisible="True">
 
     <ContentPage.ToolbarItems>
         <!--  Edit/Cancel Button for View Mode  -->
@@ -26,31 +27,31 @@
             <Border
                 Margin="0,0,0,10"
                 Padding="15,8"
-                BackgroundColor="{StaticResource Primary}"
+                BackgroundColor="{DynamicResource Primary}"
                 IsVisible="{Binding IsEditing}"
                 StrokeShape="RoundRectangle 8">
                 <Label
                     FontAttributes="Bold"
                     HorizontalOptions="Center"
                     Text="✏️ Add/Editing Mode, Make your changes and save"
-                    TextColor="{StaticResource Primary}" />
+                    TextColor="{DynamicResource Primary}" />
             </Border>
             <!--  Amount Section  -->
             <Border
                 Padding="20"
-                BackgroundColor="{StaticResource Surface}"
+                BackgroundColor="{DynamicResource Surface}"
                 StrokeShape="RoundRectangle 12">
                 <VerticalStackLayout Spacing="8">
                     <Label
                         FontAttributes="Bold"
                         Text="Amount"
-                        TextColor="{StaticResource Primary}" />
+                        TextColor="{DynamicResource Primary}" />
                     <!--  View Mode  -->
                     <Label
                         FontAttributes="Bold"
                         FontSize="24"
                         Text="{Binding Amount, StringFormat='{0:F2} EGP'}"
-                        TextColor="{StaticResource Primary}">
+                        TextColor="{DynamicResource Primary}">
                         <Label.Triggers>
                             <DataTrigger
                                 Binding="{Binding IsEditing}"
@@ -71,13 +72,13 @@
             <!--  Category Section  -->
             <Border
                 Padding="20"
-                BackgroundColor="{StaticResource Surface}"
+                BackgroundColor="{DynamicResource Surface}"
                 StrokeShape="RoundRectangle 12">
                 <VerticalStackLayout Spacing="8">
                     <Label
                         FontAttributes="Bold"
                         Text="Category"
-                        TextColor="{StaticResource Primary}" />
+                        TextColor="{DynamicResource Primary}" />
                     <!--  View Mode  -->
                     <HorizontalStackLayout Spacing="10">
                         <HorizontalStackLayout.Triggers>
@@ -90,7 +91,7 @@
                         </HorizontalStackLayout.Triggers>
                         <Border
                             Padding="12,6"
-                            BackgroundColor="{StaticResource Secondary}"
+                            BackgroundColor="{DynamicResource Secondary}"
                             StrokeShape="RoundRectangle 15">
                             <Label Text="{Binding Category}" TextColor="Black" />
                         </Border>
@@ -105,13 +106,13 @@
             <!--  Date Section  -->
             <Border
                 Padding="20"
-                BackgroundColor="{StaticResource Surface}"
+                BackgroundColor="{DynamicResource Surface}"
                 StrokeShape="RoundRectangle 12">
                 <VerticalStackLayout Spacing="8">
                     <Label
                         FontAttributes="Bold"
                         Text="Date"
-                        TextColor="{StaticResource Primary}" />
+                        TextColor="{DynamicResource Primary}" />
                     <!--  View Mode  -->
                     <Label FontSize="16" Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}">
                         <Label.Triggers>
@@ -130,13 +131,13 @@
             <!--  Description Section  -->
             <Border
                 Padding="20"
-                BackgroundColor="{StaticResource Surface}"
+                BackgroundColor="{DynamicResource Surface}"
                 StrokeShape="RoundRectangle 12">
                 <VerticalStackLayout Spacing="8">
                     <Label
                         FontAttributes="Bold"
                         Text="Description"
-                        TextColor="{StaticResource Primary}" />
+                        TextColor="{DynamicResource Primary}" />
                     <!--  View Mode  -->
                     <Label
                         FontSize="16"
@@ -162,7 +163,7 @@
             <!--  Save Button (only visible when editing)  -->
             <Button
                 Margin="0,10,0,0"
-                BackgroundColor="{StaticResource Primary}"
+                BackgroundColor="{DynamicResource Primary}"
                 Command="{Binding SaveCommand}"
                 CornerRadius="25"
                 FontAttributes="Bold"

@@ -1,4 +1,5 @@
 using CommunityToolkit.Maui;
+using ExpenseTracker.App.Helpers;
 using ExpenseTracker.App.ViewModels;
 using ExpenseTracker.App.Views;
 using ExpenseTracker.Infrastructure.Interfaces;
@@ -50,14 +51,26 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<App>();
 
+        Handlers.RemoveBorders();
+        
         var app = builder.Build();
 
-        // Initialize DB and seed data
+        // Initialize DB and seed data asynchronously
         var dataService = app.Services.GetRequiredService<IDataService>() as SqlServices;
-        Task.Run(async () => {
-            await dataService.InitializeAsync();
-            await Initializer.SeedAsync(dataService.Connection);
-        }).Wait();
+        if (dataService != null)
+        {
+            _ = Task.Run(async () => {
+                try
+                {
+                    await dataService.InitializeAsync();
+                    await Initializer.SeedAsync(dataService.Connection);
+                }
+                catch (Exception ex)
+                {
+                    //System.Diagnostics.Debug.WriteLine($"Database initialization error: {ex.Message}");
+                }
+            });
+        }
 
         return app;
     }

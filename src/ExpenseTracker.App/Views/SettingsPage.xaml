@@ -14,21 +14,21 @@
             <!--  User Info Section  -->
             <Border
                 Padding="20"
-                BackgroundColor="{StaticResource Surface}"
+                BackgroundColor="{DynamicResource Surface}"
                 StrokeShape="RoundRectangle 12">
                 <VerticalStackLayout Spacing="12">
                     <Label
                         FontAttributes="Bold"
                         FontSize="18"
                         Text="Account"
-                        TextColor="{StaticResource Primary}" />
+                        TextColor="{DynamicResource Primary}" />
                     <HorizontalStackLayout Spacing="10">
                         <VerticalStackLayout Spacing="2">
                             <Label
                                 FontAttributes="Bold"
                                 FontSize="16"
                                 Text="{Binding UserEmail}" />
-                            <Label FontSize="12" TextColor="{StaticResource Gray600}">
+                            <Label FontSize="12" TextColor="{DynamicResource Gray600}">
                                 <Label.Triggers>
                                     <DataTrigger
                                         Binding="{Binding IsLoggedIn}"
@@ -51,14 +51,14 @@
             <!--  App Settings Section  -->
             <Border
                 Padding="20"
-                BackgroundColor="{StaticResource Surface}"
+                BackgroundColor="{DynamicResource Surface}"
                 StrokeShape="RoundRectangle 12">
                 <VerticalStackLayout Spacing="15">
                     <Label
                         FontAttributes="Bold"
                         FontSize="18"
                         Text="Preferences"
-                        TextColor="{StaticResource Primary}" />
+                        TextColor="{DynamicResource Primary}" />
                     <!--  Theme Setting  -->
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
                         <VerticalStackLayout Grid.Column="1">
@@ -66,7 +66,7 @@
                             <Label
                                 FontSize="12"
                                 Text="Choose your preferred theme"
-                                TextColor="{StaticResource Gray600}" />
+                                TextColor="{DynamicResource Gray600}" />
                         </VerticalStackLayout>
                         <Picker
                             Grid.Column="2"
@@ -80,17 +80,17 @@
             <!--  Actions Section  -->
             <Border
                 Padding="20"
-                BackgroundColor="{StaticResource Surface}"
+                BackgroundColor="{DynamicResource Surface}"
                 StrokeShape="RoundRectangle 12">
                 <VerticalStackLayout Spacing="15">
                     <Label
                         FontAttributes="Bold"
                         FontSize="18"
                         Text="Actions"
-                        TextColor="{StaticResource Primary}" />
+                        TextColor="{DynamicResource Primary}" />
                     <!--  About Button  -->
                     <Button
-                        BackgroundColor="{StaticResource Accent4}"
+                        BackgroundColor="{DynamicResource Accent4}"
                         BorderWidth="1"
                         Command="{Binding ShowAboutCommand}"
                         CornerRadius="8"
@@ -98,7 +98,7 @@
                         Text="📋 About" />
                     <!--  Logout Button  -->
                     <Button
-                        BackgroundColor="{StaticResource Accent4}"
+                        BackgroundColor="{DynamicResource Accent4}"
                         Command="{Binding LogoutCommand}"
                         CornerRadius="8"
                         HorizontalOptions="Fill"
@@ -112,12 +112,12 @@
                     FontSize="12"
                     HorizontalOptions="Center"
                     Text="ExpenseTracker v1.0.0"
-                    TextColor="{StaticResource Gray400}" />
+                    TextColor="{DynamicResource Gray400}" />
                 <Label
                     FontSize="10"
                     HorizontalOptions="Center"
                     Text="Built with ❤️"
-                    TextColor="{StaticResource Gray400}" />
+                    TextColor="{DynamicResource Gray400}" />
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

@@ -5,7 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:Entities.Dtos;assembly=Entities"
     xmlns:vm="clr-namespace:ExpenseTracker.App.ViewModels"
-    x:DataType="vm:ExpenseListViewModel">
+    x:DataType="vm:ExpenseListViewModel"
+    Shell.NavBarIsVisible="True">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding NavigateAddCommand}" Text="Add" />
@@ -15,7 +16,7 @@
         <Border
             Grid.Row="0"
             Padding="15,10"
-            BackgroundColor="{StaticResource Surface}">
+            BackgroundColor="{DynamicResource Surface}">
             <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
                 <!--  Search Bar  -->
                 <SearchBar
@@ -30,7 +31,8 @@
                     Grid.Column="1"
                     Margin="10,0,0,0">
                     <Button
-                        BackgroundColor="{StaticResource Primary}"
+                        Padding="2"
+                        BackgroundColor="{DynamicResource Primary}"
                         Command="{Binding ToggleFilterCommand}"
                         CornerRadius="22"
                         FontSize="18"
@@ -41,7 +43,7 @@
                     <!--  Filter Count Badge  -->
                     <Border
                         Margin="0,-5,-5,0"
-                        BackgroundColor="{StaticResource Accent4}"
+                        BackgroundColor="{DynamicResource Accent4}"
                         HeightRequest="20"
                         HorizontalOptions="End"
                         IsVisible="{Binding HasActiveFilters}"
@@ -63,12 +65,12 @@
         <Border
             Grid.Row="1"
             Padding="15"
-            BackgroundColor="{StaticResource Surface}"
+            BackgroundColor="{DynamicResource Surface}"
             IsVisible="{Binding IsFilterExpanded}">
             <Grid
                 ColumnDefinitions="*,*"
                 ColumnSpacing="10"
-                RowDefinitions="Auto,Auto,Auto,Auto"
+                RowDefinitions="Auto,Auto,Auto,Auto,auto"
                 RowSpacing="15">
                 <!--  Category Filter  -->
                 <Label
@@ -81,7 +83,7 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
-                    BackgroundColor="{StaticResource Surface}"
+                    BackgroundColor="{DynamicResource Surface}"
                     ItemsSource="{Binding Categories}"
                     SelectedItem="{Binding SelectedCategory}" />
                 <!--  Date Range  -->
@@ -98,12 +100,12 @@
                 <DatePicker
                     Grid.Row="3"
                     Grid.Column="0"
-                    BackgroundColor="{StaticResource Surface}"
+                    BackgroundColor="{DynamicResource Surface}"
                     Date="{Binding FromDate}" />
                 <DatePicker
                     Grid.Row="3"
                     Grid.Column="1"
-                    BackgroundColor="{StaticResource Surface}"
+                    BackgroundColor="{DynamicResource Surface}"
                     Date="{Binding ToDate}" />
                 <!--  Filter Actions  -->
                 <Grid
@@ -114,13 +116,13 @@
                     ColumnSpacing="10">
                     <Button
                         Grid.Column="0"
-                        BackgroundColor="{StaticResource Secondary}"
+                        BackgroundColor="{DynamicResource Secondary}"
                         Command="{Binding ClearFiltersCommand}"
                         Text="Clear Filters"
                         TextColor="White" />
                     <Button
                         Grid.Column="1"
-                        BackgroundColor="{StaticResource Primary}"
+                        BackgroundColor="{DynamicResource Primary}"
                         Command="{Binding ToggleFilterCommand}"
                         Text="Apply Filters"
                         TextColor="White" />
@@ -131,7 +133,7 @@
             Grid.Row="2"
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding IsRefreshing}">
-            <CollectionView BackgroundColor="{StaticResource Background}" ItemsSource="{Binding Expenses}">
+            <CollectionView BackgroundColor="{DynamicResource Background}" ItemsSource="{Binding Expenses}">
                 <CollectionView.EmptyView>
                     <Label
                         HorizontalOptions="Center"
@@ -155,7 +157,7 @@
                             <SwipeView.RightItems>
                                 <SwipeItems>
                                     <SwipeItem
-                                        BackgroundColor="{StaticResource Accent4}"
+                                        BackgroundColor="{DynamicResource Accent4}"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ExpenseListViewModel}}, Path=DeleteCommand}"
                                         CommandParameter="{Binding .}"
                                         Text="Delete" />
@@ -163,9 +165,9 @@
                             </SwipeView.RightItems>
                             <Border
                                 Margin="15,8"
-                                Padding="20,15"
-                                BackgroundColor="{StaticResource Surface}"
-                                Stroke="{StaticResource Gray200}"
+                                Padding="12,15"
+                                BackgroundColor="{DynamicResource Background}"
+                                Stroke="{DynamicResource Border}"
                                 StrokeShape="RoundRectangle 12"
                                 StrokeThickness="1">
                                 <Border.GestureRecognizers>
@@ -175,7 +177,7 @@
                                     <!--  Category Icon  -->
                                     <Border
                                         Grid.Column="0"
-                                        BackgroundColor="{StaticResource Primary}"
+                                        BackgroundColor="{DynamicResource Primary}"
                                         HeightRequest="45"
                                         StrokeShape="RoundRectangle 22"
                                         WidthRequest="45">
@@ -187,15 +189,15 @@
                                             VerticalOptions="Center" />
                                     </Border>
                                     <!--  Expense Details  -->
-                                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                    <VerticalStackLayout Grid.Column="1" Spacing="9">
                                         <Label
                                             FontAttributes="Bold"
                                             FontSize="16"
                                             Text="{Binding Description}" />
-                                        <HorizontalStackLayout Spacing="8">
+                                        <HorizontalStackLayout Spacing="12">
                                             <Border
                                                 Padding="12,4"
-                                                BackgroundColor="{StaticResource Secondary}"
+                                                BackgroundColor="{DynamicResource Secondary}"
                                                 StrokeShape="RoundRectangle 10">
                                                 <Label
                                                     FontSize="11"
@@ -205,7 +207,7 @@
                                             <Label
                                                 FontSize="12"
                                                 Text="{Binding Date, StringFormat='{0:MMM dd, yyyy}'}"
-                                                TextColor="{StaticResource Gray600}"
+                                                TextColor="{DynamicResource Gray600}"
                                                 VerticalOptions="Center" />
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>
@@ -218,17 +220,17 @@
                                                     FontSize="18"
                                                     HorizontalOptions="End"
                                                     Text="{Binding Amount, StringFormat='{0:F2}'}"
-                                                    TextColor="{StaticResource Primary}" />
+                                                    TextColor="{DynamicResource Primary}" />
                                                 <Label
                                                     FontSize="12"
                                                     HorizontalOptions="End"
                                                     Text="EGP"
-                                                    TextColor="{StaticResource Gray600}" />
+                                                    TextColor="{DynamicResource Gray600}" />
                                             </VerticalStackLayout>
                                             <Label
                                                 FontSize="16"
                                                 Text="›"
-                                                TextColor="{StaticResource Gray400}"
+                                                TextColor="{DynamicResource Gray400}"
                                                 VerticalOptions="Center" />
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>
