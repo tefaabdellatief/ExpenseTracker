@@ -5,47 +5,157 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <!--  Palette  -->
-            <Color x:Key="Primary">#2D3E50</Color>
-            <Color x:Key="Secondary">#34495E</Color>
-            <Color x:Key="Accent1">#F4A261</Color>
-            <Color x:Key="Accent2">#2A9D8F</Color>
-            <Color x:Key="Accent3">#64B5F6</Color>
-            <Color x:Key="Accent4">#E76F51</Color>
-            <Color x:Key="Background">#FFFFFF</Color>
-            <Color x:Key="Surface">#F8F9FA</Color>
-            <Color x:Key="Divider">#E0E0E0</Color>
-            <Color x:Key="Gray100">#F5F5F5</Color>
-            <Color x:Key="Gray200">#E5E5E5</Color>
-            <Color x:Key="Gray400">#9CA3AF</Color>
-            <Color x:Key="Gray600">#6B7280</Color>
+            <ResourceDictionary.MergedDictionaries>
+                <!--  Default Light Theme - will be replaced by ThemeService  -->
+                <ResourceDictionary Source="Themes/LightTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-
-
+            <!--  Global Styles  -->
             <Style TargetType="ContentPage">
                 <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
             </Style>
 
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationBarColor}" />
+                <Setter Property="BarTextColor" Value="{StaticResource NavigationBarText}" />
+            </Style>
+
+            <Style TargetType="Shell">
+                <Setter Property="BackgroundColor" Value="{StaticResource NavigationBarColor}" />
+                <Setter Property="ForegroundColor" Value="{StaticResource NavigationBarText}" />
+                <Setter Property="TitleColor" Value="{StaticResource NavigationBarText}" />
+                <Setter Property="DisabledColor" Value="{StaticResource InputPlaceholder}" />
+                <Setter Property="UnselectedColor" Value="{StaticResource OnSurfaceVariant}" />
+                <Setter Property="TabBarBackgroundColor" Value="{StaticResource NavigationBarColor}" />
+                <Setter Property="TabBarForegroundColor" Value="{StaticResource NavigationBarText}" />
+                <Setter Property="TabBarTitleColor" Value="{StaticResource NavigationBarText}" />
+                <Setter Property="TabBarUnselectedColor" Value="{StaticResource InputPlaceholder}" />
+            </Style>
+
             <Style TargetType="Label">
-                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                <Setter Property="TextColor" Value="{StaticResource OnBackground}" />
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
             </Style>
 
             <Style TargetType="Button">
-                <Setter Property="CornerRadius" Value="10" />
-                <Setter Property="Padding" Value="12,8" />
-                <Setter Property="BackgroundColor" Value="{StaticResource Accent1}" />
-                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="{StaticResource ButtonPrimary}" />
+                <Setter Property="TextColor" Value="{StaticResource ButtonText}" />
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="Padding" Value="16,12" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
             </Style>
 
+            <Style x:Key="SecondaryButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource ButtonSecondary}" />
+                <Setter Property="TextColor" Value="{StaticResource ButtonTextSecondary}" />
+                <Setter Property="BorderColor" Value="{StaticResource Border}" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="Padding" Value="16,12" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="{StaticResource InputBackground}" />
+                <Setter Property="TextColor" Value="{StaticResource InputText}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource InputPlaceholder}" />
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
+            </Style>
+
+            <Style TargetType="Editor">
+                <Setter Property="BackgroundColor" Value="{StaticResource InputBackground}" />
+                <Setter Property="TextColor" Value="{StaticResource InputText}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource InputPlaceholder}" />
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
+            </Style>
+
+            <Style TargetType="Picker">
+                <Setter Property="BackgroundColor" Value="{StaticResource InputBackground}" />
+                <Setter Property="TextColor" Value="{StaticResource InputText}" />
+                <Setter Property="TitleColor" Value="{StaticResource InputPlaceholder}" />
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
+            </Style>
+
+            <Style TargetType="DatePicker">
+                <Setter Property="BackgroundColor" Value="{StaticResource InputBackground}" />
+                <Setter Property="TextColor" Value="{StaticResource InputText}" />
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
+            </Style>
+
+            <Style TargetType="TimePicker">
+                <Setter Property="BackgroundColor" Value="{StaticResource InputBackground}" />
+                <Setter Property="TextColor" Value="{StaticResource InputText}" />
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
+            </Style>
+
+            <Style TargetType="SearchBar">
+                <Setter Property="BackgroundColor" Value="{StaticResource InputBackground}" />
+                <Setter Property="TextColor" Value="{StaticResource InputText}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource InputPlaceholder}" />
+                <Setter Property="CancelButtonColor" Value="{StaticResource Primary}" />
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
+            </Style>
+
+            <Style TargetType="Switch">
+                <Setter Property="OnColor" Value="{StaticResource Primary}" />
+                <Setter Property="ThumbColor" Value="{StaticResource OnPrimary}" />
+            </Style>
+
+            <Style TargetType="Slider">
+                <Setter Property="MinimumTrackColor" Value="{StaticResource Primary}" />
+                <Setter Property="MaximumTrackColor" Value="{StaticResource Divider}" />
+                <Setter Property="ThumbColor" Value="{StaticResource Primary}" />
+            </Style>
+
+            <Style TargetType="ProgressBar">
+                <Setter Property="ProgressColor" Value="{StaticResource Primary}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Divider}" />
+            </Style>
+
+            <Style TargetType="ActivityIndicator">
+                <Setter Property="Color" Value="{StaticResource Primary}" />
+            </Style>
+
+            <Style TargetType="Border">
+                <Setter Property="Stroke" Value="{StaticResource Border}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+            </Style>
+
+            <!--  Card Style  -->
+            <Style x:Key="CardStyle" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+                <Setter Property="Stroke" Value="{StaticResource Border}" />
+                <Setter Property="StrokeThickness" Value="1" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+                <Setter Property="Padding" Value="16" />
+                <Setter Property="Margin" Value="8" />
+            </Style>
+
+            <!--  Surface Card Style  -->
+            <Style x:Key="SurfaceCardStyle" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{StaticResource SurfaceVariant}" />
+                <Setter Property="Stroke" Value="{StaticResource Border}" />
+                <Setter Property="StrokeThickness" Value="1" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+                <Setter Property="Padding" Value="16" />
+                <Setter Property="Margin" Value="8" />
+            </Style>
+
+            <!--  Validation Styles  -->
             <Style x:Key="ValidationEntry" TargetType="Entry">
-                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="{StaticResource InputBackground}" />
+                <Setter Property="TextColor" Value="{StaticResource InputText}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource InputPlaceholder}" />
             </Style>
 
             <Style
                 x:Key="InvalidEntry"
                 BasedOn="{StaticResource ValidationEntry}"
                 TargetType="Entry">
-                <Setter Property="BackgroundColor" Value="#FFF0F0" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Error}" />
+                <Setter Property="TextColor" Value="{StaticResource OnBackground}" />
             </Style>
 
         </ResourceDictionary>

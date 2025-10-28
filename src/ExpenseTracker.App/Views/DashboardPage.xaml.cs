@@ -16,7 +16,7 @@ public partial class DashboardPage : ContentPage
         UpdateEmptyStateVisibility();
     }
 
-    private void OnCategoryDataChanged(object sender, NotifyCollectionChangedEventArgs e)
+    private void OnCategoryDataChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         UpdateEmptyStateVisibility();
     }

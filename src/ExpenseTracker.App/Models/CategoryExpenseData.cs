@@ -25,12 +25,12 @@ public class CategoryExpenseData
 
     private static Color GetCategoryColor(ExpenseCategory category) => category switch
     {
-        ExpenseCategory.Food => Colors.Orange,
-        ExpenseCategory.Transport => Colors.Blue,
-        ExpenseCategory.Shopping => Colors.Purple,
-        ExpenseCategory.Entertainment => Colors.Red,
-        ExpenseCategory.Bills => Colors.Green,
-        ExpenseCategory.Other => Colors.Gray,
-        _ => Colors.Black
+        ExpenseCategory.Food => Color.FromArgb("#f9cb9c"),        // Light palette - warm orange
+        ExpenseCategory.Transport => Color.FromArgb("#0a4c47"),   // Light palette - dark teal
+        ExpenseCategory.Shopping => Color.FromArgb("#c985a8"),    // Dark palette - purple
+        ExpenseCategory.Entertainment => Color.FromArgb("#ea9999"), // Dark palette - coral
+        ExpenseCategory.Bills => Color.FromArgb("#fce5cd"),       // Dark palette - cream
+        ExpenseCategory.Other => Color.FromArgb("#fde0e1"),       // Light palette - light pink
+        _ => Color.FromArgb("#0a4c47")                            // Default to primary
     };
 }

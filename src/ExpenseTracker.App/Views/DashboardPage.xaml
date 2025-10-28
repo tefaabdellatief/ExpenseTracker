@@ -32,13 +32,13 @@
                             FontSize="12"
                             HorizontalOptions="Center"
                             Text="Total Expenses"
-                            TextColor="White" />
+                            TextColor="{StaticResource Primary}" />
                         <Label
                             FontAttributes="Bold"
                             FontSize="18"
                             HorizontalOptions="Center"
                             Text="{Binding TotalExpenses, StringFormat='{0:F2} EGP'}"
-                            TextColor="White" />
+                            TextColor="{StaticResource Primary}" />
                     </VerticalStackLayout>
                 </Border>
                 <!--  Total Transactions Card  -->
@@ -57,13 +57,13 @@
                             FontSize="12"
                             HorizontalOptions="Center"
                             Text="Transactions"
-                            TextColor="White" />
+                            TextColor="{StaticResource Primary}" />
                         <Label
                             FontAttributes="Bold"
                             FontSize="18"
                             HorizontalOptions="Center"
                             Text="{Binding TotalTransactions}"
-                            TextColor="White" />
+                            TextColor="{StaticResource Primary}" />
                     </VerticalStackLayout>
                 </Border>
                 <!--  Average Expense Card  -->

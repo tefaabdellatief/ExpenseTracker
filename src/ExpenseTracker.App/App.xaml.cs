@@ -7,12 +7,18 @@ namespace ExpenseTracker.App;
 public partial class App : Application
 {
     private readonly IPreferencesService _preferencesService;
+    private readonly IThemeService _themeService;
 
-    public App(IPreferencesService preferencesService)
+    public App(IPreferencesService preferencesService, IThemeService themeService)
     {
         InitializeComponent();
         _preferencesService = preferencesService;
+        _themeService = themeService;
+        
         MainPage = new AppShell();
+
+        _themeService.ApplyTheme();
+
     }
 
     protected override void OnStart()
@@ -22,7 +28,7 @@ public partial class App : Application
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             
-            if (_preferencesService.IsLoggedIn)
+            if (_preferencesService != null && _preferencesService.IsLoggedIn)
             {
                 await Shell.Current.GoToAsync("//main");
             }

@@ -1,13 +1,16 @@
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Entities.Enums;
 using ExpenseTracker.App.Services;
+using System.Collections.ObjectModel;
 
 namespace ExpenseTracker.App.ViewModels;
 
 public partial class SettingsViewModel : BaseViewModel
 {
     private readonly IPreferencesService _preferencesService;
+    private readonly IThemeService _themeService;
 
     [ObservableProperty]
     private string userEmail = string.Empty;
@@ -16,18 +19,40 @@ public partial class SettingsViewModel : BaseViewModel
     private bool isLoggedIn = false;
 
     [ObservableProperty]
-    private string selectedTheme = "System";
+    private string selectedTheme = "Light";
 
-    public SettingsViewModel(IPreferencesService preferencesService)
+    public ObservableCollection<string> AvailableThemes { get; } = new()
+    {
+        "System",
+        "Light",
+        "Dark"
+    };
+
+    public SettingsViewModel(IPreferencesService preferencesService, IThemeService themeService)
     {
         _preferencesService = preferencesService;
+        _themeService = themeService;
         LoadUserInfo();
+        LoadThemeInfo();
     }
 
     private void LoadUserInfo()
     {
         IsLoggedIn = _preferencesService.IsLoggedIn;
         UserEmail = _preferencesService.UserEmail;
+    }
+
+    private void LoadThemeInfo()
+    {
+        SelectedTheme = _themeService.CurrentTheme.ToString();
+    }
+
+    partial void OnSelectedThemeChanged(string value)
+    {
+        if (Enum.TryParse<AppThemes>(value, out var theme))
+        {
+            _themeService.SetTheme(theme);
+        }
     }
 
     [RelayCommand]

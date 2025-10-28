@@ -33,7 +33,7 @@
                     FontAttributes="Bold"
                     HorizontalOptions="Center"
                     Text="✏️ Add/Editing Mode, Make your changes and save"
-                    TextColor="White" />
+                    TextColor="{StaticResource Primary}" />
             </Border>
             <!--  Amount Section  -->
             <Border

@@ -32,6 +32,7 @@ public static class MauiProgram
         // Register app services
         builder.Services.AddSingleton<ExpenseTracker.App.Services.IPreferencesService, ExpenseTracker.App.Services.PreferencesService>();
         builder.Services.AddSingleton<ExpenseTracker.App.Services.IDialogService, ExpenseTracker.App.Services.DialogService>();
+        builder.Services.AddSingleton<ExpenseTracker.App.Services.IThemeService, ExpenseTracker.App.Services.ThemeService>();
 
         // ViewModels & Views
         builder.Services.AddTransient<ExpenseListViewModel>();

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!--  Dark Theme Colors (Palette 2)  -->
+    <!--  Primary Colors  -->
+    <Color x:Key="Primary">#c985a8</Color>
+    <Color x:Key="PrimaryLight">#fce5cd</Color>
+    <Color x:Key="Secondary">#ea9999</Color>
+    <Color x:Key="Accent">#f4cccc</Color>
+
+    <!--  Background Colors  -->
+    <Color x:Key="Background">#ffffff</Color>
+    <Color x:Key="Surface">#f4cccc</Color>
+    <Color x:Key="SurfaceVariant">#ea9999</Color>
+
+    <!--  Text Colors  -->
+    <Color x:Key="OnPrimary">#ffffff</Color>
+    <Color x:Key="OnSecondary">#ffffff</Color>
+    <Color x:Key="OnBackground">#c985a8</Color>
+    <Color x:Key="OnSurface">#c985a8</Color>
+    <Color x:Key="OnSurfaceVariant">#c985a8</Color>
+
+    <!--  Status and Navigation  -->
+    <Color x:Key="StatusBarColor">#c985a8</Color>
+    <Color x:Key="NavigationBarColor">#f4cccc</Color>
+    <Color x:Key="NavigationBarText">#c985a8</Color>
+
+    <!--  Interactive Elements  -->
+    <Color x:Key="ButtonPrimary">#c985a8</Color>
+    <Color x:Key="ButtonSecondary">#fce5cd</Color>
+    <Color x:Key="ButtonText">#ffffff</Color>
+    <Color x:Key="ButtonTextSecondary">#c985a8</Color>
+
+    <!--  Input Fields  -->
+    <Color x:Key="InputBackground">#ffffff</Color>
+    <Color x:Key="InputBorder">#ea9999</Color>
+    <Color x:Key="InputText">#c985a8</Color>
+    <Color x:Key="InputPlaceholder">#fce5cd</Color>
+
+    <!--  Utility Colors  -->
+    <Color x:Key="Success">#c985a8</Color>
+    <Color x:Key="Warning">#fce5cd</Color>
+    <Color x:Key="Error">#ea9999</Color>
+    <Color x:Key="Info">#f4cccc</Color>
+
+    <!--  Dividers and Borders  -->
+    <Color x:Key="Divider">#ea9999</Color>
+    <Color x:Key="Border">#fce5cd</Color>
+    <Color x:Key="Shadow">#c985a8</Color>
+
+    <!--  Additional Gray Colors for compatibility  -->
+    <Color x:Key="Gray100">#F5F5F5</Color>
+    <Color x:Key="Gray200">#E5E5E5</Color>
+    <Color x:Key="Gray400">#9CA3AF</Color>
+    <Color x:Key="Gray600">#6B7280</Color>
+
+    <!--  Legacy color names for backward compatibility  -->
+    <Color x:Key="Accent1">#fce5cd</Color>
+    <Color x:Key="Accent2">#ea9999</Color>
+    <Color x:Key="Accent3">#f4cccc</Color>
+    <Color x:Key="Accent4">#c985a8</Color>
+
+</ResourceDictionary>

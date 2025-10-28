@@ -152,7 +152,7 @@
                     Color="{StaticResource Primary}" />
                 <!--  Guest Access  -->
                 <Button
-                    BackgroundColor="Transparent"
+                    BackgroundColor="{StaticResource Accent1}"
                     BorderColor="{StaticResource Accent1}"
                     BorderWidth="0.5"
                     Command="{Binding ContinueAsGuestCommand}"

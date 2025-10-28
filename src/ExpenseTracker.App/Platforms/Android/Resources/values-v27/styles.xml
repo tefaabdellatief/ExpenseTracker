@@ -2,12 +2,12 @@
 <resources>
     <style name="MainTheme" parent="Maui.SplashTheme">
         <!-- Status bar color -->
-        <item name="android:statusBarColor">#0a4c47</item>
+        <item name="android:statusBarColor">#f9cb9c</item>
         <!-- Navigation bar color -->
         <item name="android:navigationBarColor">#ffffff</item>
-        <!-- Make status bar icons light -->
+        <!-- Make status bar icons light (API 23+) -->
         <item name="android:windowLightStatusBar">false</item>
-        <!-- Make navigation bar icons dark -->
+        <!-- Make navigation bar icons dark (API 27+) -->
         <item name="android:windowLightNavigationBar">true</item>
     </style>
 </resources>

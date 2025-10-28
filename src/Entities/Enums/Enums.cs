@@ -18,4 +18,10 @@ namespace Entities.Enums
             Other
         }
     }
+    public enum AppThemes
+    {
+        Light,
+        Dark,
+        System
+    }
 }
