@@ -6,6 +6,7 @@ using ExpenseTracker.Infrastructure.Services;
 using ExpenseTracker.Infrastructure.SqliteConfigs;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Hosting;
+using Syncfusion.Maui.Core.Hosting;
 using System.IO;
 
 namespace ExpenseTracker.App;
@@ -18,6 +19,7 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .ConfigureSyncfusionCore()
             .ConfigureFonts(f => f.AddFont("OpenSans-Regular.ttf", "OpenSansRegular"));
 
         // DB path

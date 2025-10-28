@@ -14,7 +14,10 @@ public partial class App : Application
         InitializeComponent();
         _preferencesService = preferencesService;
         _themeService = themeService;
-        
+
+        //30.x.x
+        Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JEaF5cXmRCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXhceXVVRGlZWEVzXkdWYEk=");
+
         MainPage = new AppShell();
 
         _themeService.ApplyTheme();
