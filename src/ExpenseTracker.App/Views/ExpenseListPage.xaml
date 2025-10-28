@@ -22,9 +22,10 @@
                 <SearchBar
                     Grid.Row="0"
                     Grid.Column="0"
-                    BackgroundColor="Transparent"
+                    BackgroundColor="{DynamicResource Surface}"
                     Placeholder="Search expenses..."
-                    Text="{Binding SearchText}" />
+                    Text="{Binding SearchText}"
+                    TextColor="{DynamicResource ButtonTextSecondary}" />
                 <!--  Filter Toggle Button  -->
                 <Grid
                     Grid.Row="0"
